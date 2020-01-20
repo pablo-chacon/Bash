@@ -1,23 +1,12 @@
 #!/bin/bash
 
-# Clear cache and clean up before shutdown.
+
+# Clean-up script set to run before shutdown. 
+
 
 # Author: ekarlsson66@gmail.com
 # Date: 2020-01-20
 # Version: 002
-
-
-# Service file content:  
-#[Unit]
-#Description=Before Shutting Down
-#
-#[Service]
-#Type=oneshot
-#RemainAfterExit=true
-#ExecStart=/bin/true
-#ExecStop=/local/bin/clean-up.sh
-#
-#[Install]
 
 
 drop="/proc/sys/vm/drop_caches"
@@ -36,38 +25,51 @@ ExecStop=/local/home/clearcache.sh
 [Install]"""
 
 
-if [ -f "$shtdwn" ]; then
-
-	"$ctl" status "$shtdwn"; if true; then
-		sync; echo 1 > "$drop"
-		echo 2 > "$drop"
-		sync; echo 3 > "$drop"
-
-		apt upgrade -y
-		apt clean -y
-		
-		exit 0;
+function clean_up()
+{		
+	sync; echo 1 > "$drop" # Clear caches.
+	echo 2 > "$drop"
+	sync; echo 3 > "$drop"
 	
+	apt upgrade -y # Upgrade apt packages.
+	apt autoremove -y # Autoremove unnecessary apt packages. 
+	 	
+	find /tmp -type f -atime +10 -delete # Remove tmp files no access 10+ days.
+}
+
+
+if [ -f "$shtdwn" ]; then # If service file exists.
+	
+	"$ctl" status "$shtdwn"; if true; then # Check service file status. 
+		
+		clean_up 
+		
+	else
+		
+		"$ctl" start beforeshutdown.service # Start service file.
+		
+		clean_up
 	fi
+
+	exit 0;
 
 else
 
-	echo "$content" > "$shtdwn"
+	echo "$content" > "$shtdwn" # Create beforeshutdown.service file.
 
-	"$ctl" daemon-reload
-	"$ctl" enable beforeshutdown.service
-	"$ctl" start beforeshutdown.service
+	"$ctl" daemon-reload # Reload service file deamon.
+	"$ctl" enable beforeshutdown.service # Enable service file
+	"$ctl" start beforeshutdown.service # Start service. 
 
-	sync; echo 1 > "$drop"
-	echo 2 > "$drop"
-	sync; echo 3 > "$drop"
-
-	apt upgrade +y -y
-	apt autoremove -y
+	clean_up
 
 	exit 0;
 
 fi
+
+
+
+
 
 
 
