@@ -1,13 +1,10 @@
 #!/bin/bash
 
-
 # Clean-up script runs before shutdown. 
-
 
 # Author: ekarlsson66@gmail.com
 # Date: 2020-01-20
 # Version: 002
-
 
 
 drop="/proc/sys/vm/drop_caches"
