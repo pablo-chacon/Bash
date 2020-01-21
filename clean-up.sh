@@ -32,8 +32,7 @@ sync; echo 1 > "$drop" # Clear cache
 echo 2 > "$drop"
 sync; echo 3 > "$drop"
 	
-apt upgrade -y # Upgrade and autoremove apt packages.
-apt autoremove -y
+apt autoremove -y # Remove unnecessary apt packages.
 	 	
 find /tmp -type f -atime +10 -delete # Remove tmp files no access 10+ days.
 }
