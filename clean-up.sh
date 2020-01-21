@@ -28,43 +28,43 @@ ExecStop=/local/home/clearcache.sh
 
 function clean_up()
 {		
-	sync; echo 1 > "$drop" # Clear cache
-	echo 2 > "$drop"
-	sync; echo 3 > "$drop"
+sync; echo 1 > "$drop" # Clear cache
+echo 2 > "$drop"
+sync; echo 3 > "$drop"
 	
-	apt upgrade -y # Upgrade and autoremove apt packages.
-	apt autoremove -y
+apt upgrade -y # Upgrade and autoremove apt packages.
+apt autoremove -y
 	 	
-	find /tmp -type f -atime +10 -delete # Remove tmp files no access 10+ days.
+find /tmp -type f -atime +10 -delete # Remove tmp files no access 10+ days.
 }
 
 
 if [ -f "$shtdwn" ]; then # If service file exists.
 	
-	"$ctl" status "$shtdwn"; if true; then # Check service file status. 
+"$ctl" status "$shtdwn"; if true; then # Check service file status. 
 		
-		clean_up 
+	clean_up 
 		
 	else
 		
-		"$ctl" start beforeshutdown.service # Start service file.
+	"$ctl" start beforeshutdown.service # Start service file.
 		
-		clean_up
+	clean_up
 	fi
 
 	exit 0;
 
 else
 
-	echo "$content" > "$shtdwn" # Create beforeshutdown.service file.
+echo "$content" > "$shtdwn" # Create beforeshutdown.service file.
 
-	"$ctl" daemon-reload # Reload service file deamon.
-	"$ctl" enable beforeshutdown.service # Enable service file
-	"$ctl" start beforeshutdown.service # Start service. 
+"$ctl" daemon-reload # Reload service file deamon.
+"$ctl" enable beforeshutdown.service # Enable service file
+"$ctl" start beforeshutdown.service # Start service. 
 
-	clean_up
+clean_up
 
-	exit 0;
+exit 0;
 
 fi
 
