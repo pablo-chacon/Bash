@@ -46,6 +46,7 @@ if [ -f "$shtdwn" ]; then # If service file exists.
 	"$ctl" start beforeshutdown.service # Start service file.
 		
 	clean_up
+	
 	fi
 
 	exit 0;
