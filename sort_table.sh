@@ -8,6 +8,7 @@
 # Version: 3.3
 # Date: 2019-12-03
 
+# Work in progress!!!!
 # In MAC addresses format: "000b-abe3-a2df"
 # Out MAC addresses: "AA:BB:CC:DD:EE:FF" (Work in progress).
 # Identify MAC addresses, remove "-".
@@ -25,6 +26,8 @@ do
 done
 }
 
+printf Arp_table.txt 
+read_table
 
 cat $1 | sed 's![-]!!g;s!:$!!' | sort -u -k2 | awk '{ print $2" ; "$1 }' \
 | iconv -f ISO-8859-1 -t UTF-8 &> "mac.csv"
