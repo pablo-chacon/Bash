@@ -13,13 +13,11 @@ ctl=$(systemctl)
 content="""
 [Unit]
 Description=Before Shutting Down
-
 [Service]
 Type=oneshot
 RemainAfterExit=true
 ExecStart=/bin/true
 ExecStop=/local/home/clearcache.sh
-
 [Install]"""
 
 
@@ -28,6 +26,8 @@ function clean_up()
 sync; echo 1 > "$drop" # Clear cache
 echo 2 > "$drop"
 sync; echo 3 > "$drop"
+
+apt update && apt upgrade
 	
 apt autoremove -y # Remove unnecessary apt packages.
 	 	
@@ -64,6 +64,5 @@ clean_up
 exit 0;
 
 fi
-
 
 
