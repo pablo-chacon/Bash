@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Clean-up script runs before shutdown. 
+# Clean-up script runs before shutdown.
+# Remove tmp, unused/unnecessary apt, flush logs and drop caches.
+# Creates service file if it dont exists.
 
 # Author: ekarlsson66@gmail.com
 # Date: 2020-01-20
