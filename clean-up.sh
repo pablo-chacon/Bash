@@ -30,6 +30,8 @@ sync; echo 3 > "$drop"
 apt update && apt upgrade
 	
 apt autoremove -y # Remove unnecessary apt packages.
+
+apt autoclean
 	 	
 find /tmp -type f -atime +10 -delete # Remove tmp files no access 10+ days.
 
