@@ -32,6 +32,8 @@ apt update && apt upgrade
 apt autoremove -y # Remove unnecessary apt packages.
 	 	
 find /tmp -type f -atime +10 -delete # Remove tmp files no access 10+ days.
+
+rm -rf /var/log/* # Remove all logs.
 }
 
 
@@ -61,8 +63,9 @@ echo "$content" > "$shtdwn" # Create beforeshutdown.service file.
 
 clean_up
 
+
 exit 0;
 
-fi
 
+fi
 
