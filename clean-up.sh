@@ -23,7 +23,7 @@ ExecStop=/local/home/clearcache.sh
 [Install]"""
 
 
-function clean_up
+function clean_up()
 {		
 sync; echo 1 > "$drop" # Clear cache
 echo 2 > "$drop"
