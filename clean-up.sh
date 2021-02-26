@@ -29,7 +29,7 @@ sync; echo 1 > "$drop" # Clear cache
 echo 2 > "$drop"
 sync; echo 3 > "$drop"
 
-apt update && apt upgrade
+apt update && apt upgrade -y
 	
 apt autoremove -y # Remove unnecessary apt packages.
 
