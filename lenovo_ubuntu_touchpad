@@ -1,4 +1,19 @@
-#!/bin/bash
-modprobe i2c_hid
+#!/bin/sh
+
+
+# Author: ekarlsson66@gmail.com
+# Date: 2021-08-18
+# Version: 001
+
+
+touch /etc/systemd/system/touchpadfix.service
+
+modprobe i2c_hid 
 echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/elants_i2c/unbind
-echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/i2c_hid/bind
+echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/i2c_hid/bind > /usr/local/bin/touchpadfix
+
+chmod + x /usr/local/bin/touchpadfix
+
+systemctl daemon-reload
+
+systemctl enable --now touchpadfix.service
