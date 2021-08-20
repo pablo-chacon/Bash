@@ -1,18 +1,33 @@
 #!/bin/sh
 
+touchpad_service(){
 
-# Author: ekarlsson66@gmail.com
-# Date: 2021-08-18
-# Version: 001
+cat /etc/systemd/system/touchpadfix.service 
+[Unit]
+Description=Fix touchpad issue by binding correct driver
 
+[Service]
+ExecStart=/usr/local/bin/touchpadfix
+Type=oneshot
+RemainAfterExit=yes
 
-touch /etc/systemd/system/touchpadfix.service
+[Install]
+WantedBy=multi-user.target
 
+}
+
+touchpad_fix(){
+
+cat "/usr/local/bin/touchpadfix"
 modprobe i2c_hid 
-echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/elants_i2c/unbind
-echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/i2c_hid/bind > /usr/local/bin/touchpadfix
+echo "i2c-ELAN0001:00" > "/sys/bus/i2c/drivers/elants_i2c/unbind"
+echo "i2c-ELAN0001:00" > "/sys/bus/i2c/drivers/i2c_hid/bind" > "/usr/local/bin/touchpadfix"
+chmod + x "/usr/local/bin/touchpadfix"
 
-chmod + x /usr/local/bin/touchpadfix
+}
+
+touchpad_service
+touchpad_fix
 
 systemctl daemon-reload
 
