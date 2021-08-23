@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# The file contents isn't my work. I keep it here to avoid looking for answers in case of nuking.
+
 # Create trackpadfix.service with content.
 cat /etc/systemd/system/trackpadpadfix.service 
 "[Unit]
