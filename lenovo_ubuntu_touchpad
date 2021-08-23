@@ -16,7 +16,8 @@ WantedBy=multi-user.target"
 # Create trackpadfix. 
 cat /usr/local/bin/trackpadfix
 # Content of trackpadfix file.
-"modprobe i2c_hid 
+"#!/bin/sh
+modprobe i2c_hid 
 echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/elants_i2c/unbind
 echo "i2c-ELAN0001:00" > /sys/bus/i2c/drivers/i2c_hid/bind > /usr/local/bin/touchpadfix
 chmod + x /usr/local/bin/trackpadfix"
